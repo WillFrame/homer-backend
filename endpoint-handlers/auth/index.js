@@ -1,22 +1,26 @@
-import { ENDPOINTS_ADDITIONAL } from '../../consts/endpoints.js';
 import {HTTP_METHOD} from '../../consts/http-methods.js';
-import { notFoundHandler } from '../404/index.js';
-import addUser from './create.js';
+// import tokenManager from '../../utils/token-manager.js';
+import {notFoundHandler} from '../404/index.js';
+import singIn from './create.js';
 
-export const userHandler = (req, res) => {
+export const authHandler = (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const urlFields = url.pathname.split('/');
 
-    // create
-    if (req.method === HTTP_METHOD.POST && urlFields[2] === ENDPOINTS_ADDITIONAL.CREATE) {
+    // sign_in
+    if (req.method === HTTP_METHOD.POST && urlFields[2] === 'sign_in') {
         let body = [];
         return req
             .on('data', chunk => body.push(chunk))
             .on('end', () => {
                 body = JSON.parse(Buffer.concat(body).toString());
-                addUser(body).then(() => {
+                singIn({
+                    ...body,
+                    ip: req.ip,
+                    user_agent: req.headers['user-agent']
+                }).then((response) => {
                     res.writeHead(200, {'Content-Type': 'text/plain'});
-                    res.end('Пользователь успешно создан');
+                    res.end(response);
                 });
             });
     }
