@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
     USER: 'user',
+    AUTH: 'auth',
 }
 
 export const ENDPOINTS_ADDITIONAL = {

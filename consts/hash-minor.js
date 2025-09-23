@@ -1,1 +1,0 @@
-export const HASH_MINOR = 10;

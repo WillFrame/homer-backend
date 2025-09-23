@@ -1,13 +1,16 @@
+import { ENDPOINTS_ADDITIONAL } from '../../consts/endpoints.js';
 import {HTTP_METHOD} from '../../consts/http-methods.js';
+import { notFoundHandler } from '../404/index.js';
 import addUser from './create.js';
 
 export const userHandler = (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const urlFields = url.pathname.split('/');
 
-    if (req.method === HTTP_METHOD.POST && urlFields[2] === 'create') {
+    // create
+    if (req.method === HTTP_METHOD.POST && urlFields[2] === ENDPOINTS_ADDITIONAL.CREATE) {
         let body = [];
-        req
+        return req
             .on('data', chunk => body.push(chunk))
             .on('end', () => {
                 body = JSON.parse(Buffer.concat(body).toString());
@@ -17,4 +20,6 @@ export const userHandler = (req, res) => {
                 });
             });
     }
+
+    return notFoundHandler(req, res);
 };
