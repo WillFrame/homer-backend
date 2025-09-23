@@ -1,5 +1,4 @@
 import {HTTP_METHOD} from '../../consts/http-methods.js';
-// import tokenManager from '../../utils/token-manager.js';
 import {notFoundHandler} from '../404/index.js';
 import singIn from './create.js';
 
@@ -14,14 +13,11 @@ export const authHandler = (req, res) => {
             .on('data', chunk => body.push(chunk))
             .on('end', () => {
                 body = JSON.parse(Buffer.concat(body).toString());
-                singIn({
-                    ...body,
-                    ip: req.ip,
-                    user_agent: req.headers['user-agent']
-                }).then((response) => {
-                    res.writeHead(200, {'Content-Type': 'text/plain'});
-                    res.end(response);
-                });
+                singIn({...body, ip: req.ip, user_agent: req.headers['user-agent']})
+                    .then((response) => {
+                        res.writeHead(200, {'Content-Type': 'text/plain'});
+                        res.end(response);
+                    });
             });
     }
 
