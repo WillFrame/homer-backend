@@ -23,7 +23,7 @@ async function singIn({name, password, ip, user_agent}) {
                         INSERT INTO user_sessions (user_id, token_hash, user_agent, ip_address, expires_at)
                         VALUES ($1, $2, $3, $4, $5)
                     `,
-                    [id, tokenManager.generateRandomToken(), user_agent, ip, new Date(Date.now() + TOKEN_EXPIRES)]
+                    [id, generatedToken, user_agent, ip, new Date(Date.now() + TOKEN_EXPIRES)]
                 );
                 return `Bearer ${generatedToken}`;
             }
