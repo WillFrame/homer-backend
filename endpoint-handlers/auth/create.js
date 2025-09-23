@@ -13,7 +13,7 @@ async function singIn({name, password, ip, user_agent}) {
         );
 
         if (result.rows[0]) {
-            const {id, name, password: hashedPassword} = result.rows[0];
+            const {id, password: hashedPassword} = result.rows[0];
 
             if (await compareHashed(password, hashedPassword)) {
                 const generatedToken = tokenManager.generateRandomToken();
