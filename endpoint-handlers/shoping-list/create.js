@@ -3,8 +3,10 @@ import {compareHashed} from '../../utils/hash-string.js';
 import tokenManager from '../../utils/token-manager.js';
 import {TOKEN_EXPIRES} from '../../consts/token-expires.js';
 
-async function singIn({name, password, ip, user_agent}) {
+async function create(req, res) {
     try {
+        const {name, password} = await parseRequestBody(req);
+
         const result = await pool.query(
             `SELECT id, name, password
             FROM users
@@ -25,16 +27,20 @@ async function singIn({name, password, ip, user_agent}) {
                     `,
                     [id, generatedToken, user_agent, ip, new Date(Date.now() + TOKEN_EXPIRES)]
                 );
-                return `Bearer ${generatedToken}`;
+
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                return res.end(JSON.stringify({token: `Bearer ${generatedToken}`}));
             }
 
-            throw new Error('Неверный пароль');
+            res.writeHead(405, {'Content-Type': 'text/plain'});
+            throw new Error('Wrong password');
         } else {
-            throw new Error('Пользователь не найден');
+            res.writeHead(404, {'Content-Type': 'text/plain'});
+            throw new Error('User not found');
         }
     } catch (error) {
-        return `❌ Ошибка добавления пользователя: ${error.message}`
+        return res.end(JSON.stringify({error: `Authorization error: ${error.message}`}));
     }
 }
 
-export default singIn;
+export default create;

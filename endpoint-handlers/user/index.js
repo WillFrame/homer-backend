@@ -1,9 +1,9 @@
 import { ENDPOINTS_ADDITIONAL } from '../../consts/endpoints.js';
 import {HTTP_METHOD} from '../../consts/http-methods.js';
-import { notFoundHandler } from '../404/index.js';
+import { notFoundHandler } from '../../utils/404-handler.js';
 import addUser from './create.js';
 
-export const userHandler = (req, res) => {
+export const handler = (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const urlFields = url.pathname.split('/');
 
