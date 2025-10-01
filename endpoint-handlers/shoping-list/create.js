@@ -2,6 +2,7 @@ import pool from '../../database.js';
 import {compareHashed} from '../../utils/hash-string.js';
 import tokenManager from '../../utils/token-manager.js';
 import {TOKEN_EXPIRES} from '../../consts/token-expires.js';
+import {parseRequestBody} from '../../utils/get-body-data.js';
 
 async function create(req, res) {
     try {
@@ -11,7 +12,7 @@ async function create(req, res) {
             `SELECT id, name, password
             FROM users
             WHERE name = $1`,
-            [name]
+            [name],
         );
 
         if (result.rows[0]) {
@@ -25,7 +26,7 @@ async function create(req, res) {
                         INSERT INTO user_sessions (user_id, token_hash, user_agent, ip_address, expires_at)
                         VALUES ($1, $2, $3, $4, $5)
                     `,
-                    [id, generatedToken, user_agent, ip, new Date(Date.now() + TOKEN_EXPIRES)]
+                    [id, generatedToken, req.headers.user_agent, req.ip, new Date(Date.now() + TOKEN_EXPIRES)],
                 );
 
                 res.writeHead(200, {'Content-Type': 'application/json'});

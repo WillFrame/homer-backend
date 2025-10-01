@@ -1,4 +1,4 @@
-import { ENDPOINTS, ENDPOINTS_ADDITIONAL } from '../../consts/endpoints.js';
+import {ENDPOINTS_ADDITIONAL} from '../../consts/endpoints.js';
 import {HTTP_METHOD} from '../../consts/http-methods.js';
 import {notFoundHandler} from '../../utils/404-handler.js';
 import create from './create.js';
