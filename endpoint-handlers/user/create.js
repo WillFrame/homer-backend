@@ -6,7 +6,7 @@ async function addUser({name, password}) {
     try {
         const result = await pool.query(
             'INSERT INTO users (name, password) VALUES ($1, $2) RETURNING *',
-            [name, await hashString(password)]
+            [name, await hashString(password)],
         );
 
         console.log('✅ Пользователь добавлен');

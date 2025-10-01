@@ -2,19 +2,17 @@ import pool from '../../database.js';
 import {compareHashed} from '../../utils/hash-string.js';
 import tokenManager from '../../utils/token-manager.js';
 import {TOKEN_EXPIRES} from '../../consts/token-expires.js';
-import { parseRequestBody } from '../../utils/get-body-data.js';
+import {parseRequestBody} from '../../utils/get-body-data.js';
 
-const singIn = async (req, res) => {
+const singIn = async(req, res) => {
     try {
         const {name, password} = await parseRequestBody(req);
-
-        console.log(name, password)
 
         const result = await pool.query(
             `SELECT id, name, password
             FROM users
             WHERE name = $1`,
-            [name]
+            [name],
         );
 
         if (result.rows[0]) {
@@ -28,7 +26,7 @@ const singIn = async (req, res) => {
                         INSERT INTO user_sessions (user_id, token_hash, user_agent, ip_address, expires_at)
                         VALUES ($1, $2, $3, $4, $5)
                     `,
-                    [id, generatedToken, req.headers.user_agent, req.ip, new Date(Date.now() + TOKEN_EXPIRES)]
+                    [id, generatedToken, req.headers.user_agent, req.ip, new Date(Date.now() + TOKEN_EXPIRES)],
                 );
 
                 res.writeHead(200, {'Content-Type': 'application/json'});
@@ -44,6 +42,6 @@ const singIn = async (req, res) => {
     } catch (error) {
         return res.end(JSON.stringify({error: `Authorization error: ${error.message}`}));
     }
-}
+};
 
 export default singIn;

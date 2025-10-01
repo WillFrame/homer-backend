@@ -2,10 +2,10 @@ import {createServer} from 'node:http';
 import {
     userHandler,
     authHandler,
-    shopingListHandler
+    shopingListHandler,
 } from './endpoint-handlers/index.js';
 import {ENDPOINTS} from './consts/endpoints.js';
-import { notFoundHandler } from './utils/404-handler.js';
+import {notFoundHandler} from './utils/404-handler.js';
 
 const allowedOrigins = [process.env.ALLOWED_ORIGIN_1];
 const ALLOWED_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];

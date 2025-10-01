@@ -13,4 +13,4 @@ export const parseRequestBody = (req) => (
             })
             .on('error', reject);
     })
-)
+);
