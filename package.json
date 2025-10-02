@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon --env-file=.env.dev index.js",
+        "dev": "NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon --env-file=.env.dev index.js",
         "prod": "node --env-file=.env.prod index.js",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix"

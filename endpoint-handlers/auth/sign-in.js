@@ -4,7 +4,7 @@ import tokenManager from '../../utils/token-manager.js';
 import {TOKEN_EXPIRES} from '../../consts/token-expires.js';
 import {parseRequestBody} from '../../utils/get-body-data.js';
 
-const singIn = async(req, res) => {
+const singIn = async (req, res) => {
     try {
         const {name, password} = await parseRequestBody(req);
 

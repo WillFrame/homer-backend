@@ -1,7 +1,7 @@
 import {ENDPOINTS_ADDITIONAL} from '../../consts/endpoints.js';
 import {HTTP_METHOD} from '../../consts/http-methods.js';
 import {notFoundHandler} from '../../utils/404-handler.js';
-import create from './create.js';
+import controller from './controller.js';
 
 export const handler = (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
@@ -9,7 +9,7 @@ export const handler = (req, res) => {
 
     // create
     if (req.method === HTTP_METHOD.POST && urlFields[2] === ENDPOINTS_ADDITIONAL.CREATE) {
-        return create(req, res);
+        return controller.create(req, res);
     }
     // read list
     // update

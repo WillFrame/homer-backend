@@ -1,5 +1,4 @@
 export const ENDPOINTS = {
-    USER: 'user',
     AUTH: 'auth',
     SHOPING_LIST: 'shoping_list',
 };
