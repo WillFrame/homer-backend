@@ -4,22 +4,25 @@ import {defineConfig, globalIgnores} from "eslint/config";
 import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
-    globalIgnores(['next-env.d.ts', '.next']),
+    globalIgnores(['node_modules']),
     {
-        files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+        files: ["**/*.{js,mjs,cjs}"],
         plugins: {
             js,
             '@stylistic': stylistic,
         },
         extends: ["js/recommended"],
-        languageOptions: {globals: globals.browser},
+        languageOptions: {globals: globals.node},
         rules: {
             "object-curly-spacing": ["error", "never"],
             "no-unused-vars": "error",
             "indent": ["error", 4, {"SwitchCase": 1}],
             "no-multiple-empty-lines": ["error", {"max": 1}],
             "space-infix-ops": "error",
-            "space-before-function-paren": ["error", "never"],
+            "space-before-function-paren": [
+                "error",
+                {"anonymous": "never", "named": "never", "asyncArrow": "always"},
+            ],
             "space-in-parens": ["error", "never"],
             "comma-spacing": ["error", {"before": false, "after": true}],
             "comma-style": ["error", "last"],

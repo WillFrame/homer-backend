@@ -1,6 +1,5 @@
 import {createServer} from 'node:http';
 import {
-    userHandler,
     authHandler,
     shopingListHandler,
 } from './endpoint-handlers/index.js';
@@ -29,8 +28,6 @@ const server = createServer((req, res) => {
     const baseUrlPath = url.pathname.split('/')[1];
 
     switch (baseUrlPath) {
-        case ENDPOINTS.USER:
-            return userHandler(req, res);
         case ENDPOINTS.AUTH:
             return authHandler(req, res);
         case ENDPOINTS.SHOPING_LIST:
